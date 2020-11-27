@@ -94,9 +94,7 @@ public class CSE_360_Final_Project {
 					BufferedReader buffer2 = new BufferedReader(reader2);
 					
 					//Prints Name of columns
-					String[] columns = new String[] {
-							"ID" , "First Name", "Last Name", "Program and Plan", "Academic Level", "ASURITE"
-					};
+					String[] columns = in.getColumnInfo();
 					
 					//Initialized variables
 					int index = 0;
@@ -169,7 +167,7 @@ public class CSE_360_Final_Project {
 			
 					//add another column for date
 					String[] column = in.addColumn(date);
-					
+	
 					
 					//Initialized index and line
 					int index = 0;
@@ -202,7 +200,7 @@ public class CSE_360_Final_Project {
 					
 					roaster = in.increaseSize(roaster);
 					roaster = in.combine(roaster, attendance);
-					in.setRoaster(roaster); //save roaster after combining roaster and attendanace
+					in.setRoaster(roaster);
 					
 					//create table with data
 					JTable table = new JTable(roaster, column);
@@ -226,10 +224,9 @@ public class CSE_360_Final_Project {
 		
 		//action event when you want to save 
 		save.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
 			
-				//code in here
-				
+			public void actionPerformed(ActionEvent e) {
+
 			}
 		});
 		

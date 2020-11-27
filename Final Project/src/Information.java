@@ -3,52 +3,58 @@ public class Information {
 	//initializing variables
 	String[][] roaster;
 	String[][] attendance;
+	int roasterRow;
+	int attendanceRow;
 	String[] column = new String[] {
 			"ID" , "First Name", "Last Name", "Program and Plan", "Academic Level", "ASURITE"
 	};
 	
-	int row;
 	
+	//method saves the number of rows in Roaster
 	public void setRoasterRow(int row){
-		this.row = row;	
+		roasterRow = row;	
 	}
 	
-	//method returns file
+	//method returns the number of rows in Roaster
 	public int getRoasterRow(){
-		return row;
+		return roasterRow;
 	}
 	
+	//method saves the number of rows in Attendance
 	public void setAttendnanceRow(int row){
-		this.row = row;	
+		attendanceRow = row;	
 	}
 	
-	//method returns file
+	//method returns the number of rows in Attendance
 	public int getAttendanceRow(){
-		return row;
+		return attendanceRow;
 	}
 	
-	//method saves inputed file
+	//method saves the roaster array 
 	public void setRoaster(String[][] roaster){
 		this.roaster = roaster;
 	}
 	
-	//method returns file
+	//method saves the roaster array
 	public String[][] getRoaster(){
 		return roaster;
 	}
 	
-	//this method returns column info
-	public String[] getColumns() {
+
+	
+	
+	//this method returns the column info
+	public String[] getColumnInfo() {
 			return column;
 	}
 	
-	//this saves info in column info
+	//this method saves the column info
 	public void setColumninfo(String[] column) {
 		
 		this.column = column;
 	}
 	
-	//this method addes new date to column
+	//this method adds new column for Date
 	public String[] addColumn(String date) {
 		
 		//initailizing variables
@@ -63,18 +69,19 @@ public class Information {
 				temp[i] = column[i];
 			}
 		}
+		
 		//save new column info
 		setColumninfo(temp);
 		return temp;
 	}
 	
-	//method saves inputed file
+	//method saves the array of attendance
 	public void setAttendance(String[][] attendance){
 		this.attendance = attendance;
 		
 	}
 	
-	//method returns file
+	//method returns the array of attendance
 	public String[][] getAttendance(){
 		return attendance;
 		
@@ -102,7 +109,7 @@ public class Information {
 	}//end of class
 	
 	
-	//compares email's and combines duplicates
+	//compares email's and combines duplicates when adding attendnace
 	public String[][] compareEmails(String [][] attendance){
 		
 		//obtain number of rows in attendance
