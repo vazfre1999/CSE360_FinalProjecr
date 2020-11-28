@@ -1,8 +1,8 @@
 import java.awt.*; 
 import java.awt.event.*;
 import java.io.*;
-
 import javax.swing.*;
+
 
 public class CSE_360_Final_Project {
 
@@ -52,25 +52,33 @@ public class CSE_360_Final_Project {
 				//Creating JFrame
 				JFrame frame2 = new JFrame("Student Information");
 				
-				//creating JPanel
-				JPanel panel = new JPanel();
 				
 				//creating JLabel with student info
 				JLabel student1 = new JLabel("Name: Luis Vazquez" + "    ID: 1214868824" + "    Email: lovazque@asu.edu");
-				//JLabel student2 = new JLabel(" Name: " + "    ID: " + "    Email:  ");
-				//JLabel student3 = new JLabel(" Name: " + "    ID: " + "    Email:  ");
+				JLabel student2 = new JLabel("Name: " + "    ID: " + "    Email:  ");
+				JLabel student3 = new JLabel("Name: " + "    ID: " + "    Email:  ");
+				
+				//creating JPanel
+				JPanel panel = new JPanel();
+				
 				
 				//adding Label into panel
 				panel.add(student1);
-				//panel.add(student2);
-				//panel.add(student3);
+				panel.add(student2);
+				panel.add(student3);
 				
-				//add panel into frame
-				frame2.add(panel);
+				
+				panel.setLayout(new GridLayout(3,1 ));
+				panel.add(student1);
+				panel.add(student2);
+				panel.add(student3);
+				panel.setBorder(BorderFactory.createEmptyBorder(10, 100, 0, 10)); 
+				
 				
 				//set frame2 visible,location, and its size
+				frame2.add(panel);
 				frame2.setVisible(true);
-				frame2.setSize(600,200);
+				frame2.setSize(600,300);
 				frame2.setLocation(500, 125);
 			}
 		});
@@ -139,7 +147,7 @@ public class CSE_360_Final_Project {
 				}
 			}//end of actionPerformed()
 		});
-		
+
 		
 		//action event when you want to load attendnace 
 		attendance.addActionListener(new ActionListener() {
@@ -200,11 +208,36 @@ public class CSE_360_Final_Project {
 					
 					roaster = in.increaseSize(roaster);
 					roaster = in.combine(roaster, attendance);
-					in.setRoaster(roaster);
+					in.setRoaster(roaster);	//saving new roaster
 					
 					//create table with data
 					JTable table = new JTable(roaster, column);
 					frame.add(new JScrollPane(table));
+					
+					
+					//window that displays the number of people is roaster, additianl attendees, and their name
+					JFrame frame3 = new JFrame("Results");
+				
+					//creating buttons
+					int num1 = in.getRoasterRow();
+					JLabel lbl1 = new JLabel("Data loaded for " + num1 + " users in roaster");
+					JLabel lbl2 = new JLabel("(Number) additional attendee was found: ");
+					
+					
+					//create a gridpanel to add labels
+					JPanel panel = new JPanel();
+					panel.setLayout(new GridLayout(3,1 ));
+					panel.add(lbl1);
+					panel.add(lbl2);
+					panel.setBorder(BorderFactory.createEmptyBorder(10, 175, 10, 10)); 
+					
+					
+					//add panel to frame
+					frame3.add(panel);
+					frame3.setVisible(true);
+					frame3.setSize(600,250);
+					frame3.setLocation(500, 125);
+					
 					
 					//make text area not visible
 					text.setVisible(false);
@@ -224,11 +257,12 @@ public class CSE_360_Final_Project {
 		
 		//action event when you want to save 
 		save.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-
+			public void actionPerformed(ActionEvent e) {					
+				
 			}
 		});
+			
+				//code in here
 		
 		//action event when you want to plot  
 		plot.addActionListener(new ActionListener() {
@@ -238,7 +272,6 @@ public class CSE_360_Final_Project {
 				
 			}
 		});
-		
 		
 		
 		//set frame visible, location, and its size

@@ -5,6 +5,7 @@ public class Information {
 	String[][] attendance;
 	int roasterRow;
 	int attendanceRow;
+	int additionalUser;
 	String[] column = new String[] {
 			"ID" , "First Name", "Last Name", "Program and Plan", "Academic Level", "ASURITE"
 	};
@@ -35,20 +36,18 @@ public class Information {
 		this.roaster = roaster;
 	}
 	
-	//method saves the roaster array
+	//method returns the roaster array
 	public String[][] getRoaster(){
 		return roaster;
 	}
 	
 
-	
-	
-	//this method returns the column info
+	//this method returns the column array
 	public String[] getColumnInfo() {
 			return column;
 	}
 	
-	//this method saves the column info
+	//this method saves the column array
 	public void setColumninfo(String[] column) {
 		
 		this.column = column;
@@ -87,7 +86,8 @@ public class Information {
 		
 	}
 	
-	//method that creates a new row with existing data
+	
+	//method that creates a new row to add date and copies existing data
 	public String[][] increaseSize(String[][] roaster){
 		
 		//initializing variables
@@ -120,9 +120,10 @@ public class Information {
 			for(int k = 1; k < row; k++ ) {
 				//comparing to find similar asurite
 				if(attendance[i][0].compareTo(attendance[k][0]) == 0) {
-					if(i == k) {
+					if(i == k) 
+					{
 						break;
-					}else {
+					}else{
 						//adding tow integers and storing it in array
 						int num1 = Integer.parseInt(attendance[i][1]); //converting into int
 						int num2 = Integer.parseInt(attendance[k][1]);
@@ -132,14 +133,13 @@ public class Information {
 						//removing duplicate
 						attendance[k][0] = "";
 						attendance[k][1] = "";
-						
+							
 					}
-				}//end of if
+				}
 			}
 		}//end of for loop
 		return attendance;
 	}
-	
 	
 	
 	//searches for user using email and adds attendance to roaster create one table
@@ -157,7 +157,7 @@ public class Information {
 		 }//end of for loop
 		
 		return roaster;
-	}
-
+	}	
 	
-	}
+	
+}
