@@ -215,16 +215,16 @@ public class CSE_360_Final_Project {
 						index++;
 					}
 
-					//setting number of rows
+					//setting number of rows for incoming attendance col
 					info.setAttendnanceRow(fileRowCount);
 
 					//combines duplicates asurite
 					attendance = info.compareEmails(attendance);
 					info.setAttendance(attendance);
 
-					roster = info.increaseSize(roster, fileRowCount);
+					roster = info.increaseSize(roster);
 					roster = info.combine(roster, attendance);
-					info.setRoster(roster);	//saving new roster
+					//info.setRoster(roster); // commented out because increaseSize() and combine() update this.roster
 
 					//create table with data
 					JTable table = new JTable(roster, newColumn);
