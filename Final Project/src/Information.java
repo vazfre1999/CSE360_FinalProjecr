@@ -110,7 +110,7 @@ public class Information {
 		for(int i = 0; i < rowCount; i++) {
 			for(int j = 0; j < totalColCount; j++) {
 
-				if( j < 6) {
+				if( j < totalColCount-1) {
 					newRoster[i][j] = roster[i][j];
 				}else {
 					newRoster[i][j] = "Absent";
