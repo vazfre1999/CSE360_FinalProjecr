@@ -195,16 +195,16 @@ public class CSE_360_Final_Project {
 
 					//Initialized index and line
 					int index = 0;
-					int count = 0;
+					int fileRowCount = 0;
 					String line = " ";
 
 					//parse through file and count number of rows
 					while((buffer.readLine()) != null) {
-						count++;
+						fileRowCount++;
 					}
 
 					//creating data Array
-					String[][] attendance = new String[count][2];
+					String[][] attendance = new String[fileRowCount][2];
 					String[][] roster = info.getRoster();
 
 					//parse through file and save in array
@@ -216,13 +216,13 @@ public class CSE_360_Final_Project {
 					}
 
 					//setting number of rows
-					info.setAttendnanceRow(count);
+					info.setAttendnanceRow(fileRowCount);
 
 					//combines duplicates asurite
 					attendance = info.compareEmails(attendance);
 					info.setAttendance(attendance);
 
-					roster = info.increaseSize(roster);
+					roster = info.increaseSize(roster, fileRowCount);
 					roster = info.combine(roster, attendance);
 					info.setRoster(roster);	//saving new roster
 
