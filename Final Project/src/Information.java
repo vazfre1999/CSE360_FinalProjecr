@@ -103,17 +103,24 @@ public class Information {
 
 
 	//method that creates a new row to add date and copies existing data
-	public String[][] increaseSize(String[][] roster){
+	public String[][] increaseSize(String[][] roster, int fileRowCount){
 
 		totalColCount++;
+		dateColCount = totalColCount - 6;
 
-		int rowCount = getRosterRowCount();
-		String[][] newRoster = new String[rowCount][totalColCount];
+		int currentRowCount = getRosterRowCount();
+		String[][] newRoster;
+		if (fileRowCount > currentRowCount) {
+			newRoster = new String[fileRowCount][totalColCount];
+			this.rosterRowCount = fileRowCount;
+		} else {
+			newRoster = new String[currentRowCount][totalColCount];
+		}
 
 		//adding column and copying info into new array
-		for(int i = 0; i < rowCount; i++) {
+		for(int i = 0; i < fileRowCount; i++) {
 			for(int j = 0; j < totalColCount; j++) {
-				if( j < totalColCount-1) { // for all old roster columns
+				if( j < totalColCount-1 && i < currentRowCount) { // for all old roster columns and rows
 					newRoster[i][j] = roster[i][j];
 				} else {					// then the new column get initialized to "Absent"
 					newRoster[i][j] = "Absent";
