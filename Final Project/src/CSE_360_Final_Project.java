@@ -55,8 +55,8 @@ public class CSE_360_Final_Project {
 
 				//creating JLabel with student info
 				JLabel student1 = new JLabel("Name: Luis Vazquez" + "    ID: 1214868824" + "    Email: lovazque@asu.edu");
-				JLabel student2 = new JLabel("Name: " + "    ID: " + "    Email:  ");
-				JLabel student3 = new JLabel("Name: " + "    ID: " + "    Email:  ");
+				JLabel student2 = new JLabel("Name: Abraham Lords" + "   ID: 1207874781" + "    Email: allords@asu.edu");
+				JLabel student3 = new JLabel("Name: Nan Li" + "          ID: 1217668959" + "    Email: nanli9@asu.edu");
 
 				//creating JPanel
 				JPanel panel = new JPanel();
@@ -328,9 +328,11 @@ public class CSE_360_Final_Project {
 		//action event when you want to plot
 		plot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				//code in here
-
+				ScatterPlot plot = new ScatterPlot("Attendance Roster");
+				plot.setSize(800, 400);
+				plot.setLocationRelativeTo(null);
+				//example.setDefaultCloseOperation(WindowConst ants.EXIT_ON_CLOSE);
+				plot.setVisible(true);
 			}
 		});
 
