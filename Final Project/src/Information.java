@@ -5,7 +5,8 @@ public class Information {
 	String[][] attendance;
 	int rosterRowCount;
 	int attendanceRowCount;
-	int dateColCount;
+	int totalColCount = 6;
+	int dateColCount; // should equal (totalColCount - 6) at all times
 	int additionalUser;
 	String[] headerRow = new String[] {
 			"ID" , "First Name", "Last Name", "Program and Plan", "Academic Level", "ASURITE"
@@ -100,13 +101,14 @@ public class Information {
 	//method that creates a new row to add date and copies existing data
 	public String[][] increaseSize(String[][] roster){
 
-		//initializing variables
+		totalColCount++;
+
 		int rowCount = getRosterRowCount();
-		String[][] newRoster = new String[rowCount][7];
+		String[][] newRoster = new String[rowCount][totalColCount];
 
 		//adding column and copying info into new array
 		for(int i = 0; i < rowCount; i++) {
-			for(int j = 0; j < 7; j++) {
+			for(int j = 0; j < totalColCount; j++) {
 
 				if( j < 6) {
 					newRoster[i][j] = roster[i][j];
