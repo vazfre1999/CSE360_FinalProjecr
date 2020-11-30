@@ -165,15 +165,32 @@ public class CSE_360_Final_Project {
 					FileReader reader2 = new FileReader(file);
 					BufferedReader buffer2 = new BufferedReader(reader2);
 
-					String date = "Date";
+					final String[] date = {"d8"};
 
 					//date picker goes here
-
-
+					JLabel label = new JLabel("Selected Date:");
+					final JTextField text = new JTextField(20);
+					JButton b = new JButton("popup");
+					JPanel p = new JPanel();
+					p.add(label);
+					p.add(text);
+					p.add(b);
+					final JFrame f = new JFrame();
+					//f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //// this should be exit on picked date, right?
+					f.getContentPane().add(p);
+					f.pack();
+					f.setVisible(true);
+					b.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent ae) {
+							text.setText(new DatePicker2(f).setPickedDate());
+							date[0] = new DatePicker2(f).getPickedDate();
+							//System.out.println(new DatePicker2(f).getPickedDate());
+						}
+					});
 
 
 					//add another column for date
-					String[] column = info.addColumn(date);
+					String[] column = info.addColumn(date[0]);
 
 
 					//Initialized index and line
