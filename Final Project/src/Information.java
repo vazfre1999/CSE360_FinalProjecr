@@ -12,6 +12,10 @@ public class Information {
 			"ID" , "First Name", "Last Name", "Program and Plan", "Academic Level", "ASURITE"
 	};
 
+	public int getTotalColCount() {
+		return totalColCount;
+	}
+
 	public int getAttendancePoint(int rowIndex, int dateColIndex) {
 		dateColIndex += 6; // adds six to skip first 6 columns (which aren't date columns)
 		return Integer.parseInt(roster[rowIndex][dateColIndex]);
@@ -109,14 +113,14 @@ public class Information {
 		//adding column and copying info into new array
 		for(int i = 0; i < rowCount; i++) {
 			for(int j = 0; j < totalColCount; j++) {
-
-				if( j < totalColCount-1) {
+				if( j < totalColCount-1) { // for all old roster columns
 					newRoster[i][j] = roster[i][j];
-				}else {
+				} else {					// then the new column get initialized to "Absent"
 					newRoster[i][j] = "Absent";
 				}
 			}
 		}
+		this.roster = newRoster;
 		return newRoster;
 	}//end of class
 
