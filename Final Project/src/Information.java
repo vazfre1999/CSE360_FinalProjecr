@@ -1,15 +1,20 @@
 public class Information {
 
 	//initializing variables
-	String[][] roster;
+	String[][] roster; // roster[row][column]
 	String[][] attendance;
 	int rosterRowCount;
-	//int columnCount;
 	int attendanceRowCount;
+	int dateColCount;
 	int additionalUser;
-	String[] columnArray = new String[] {
+	String[] headerRow = new String[] {
 			"ID" , "First Name", "Last Name", "Program and Plan", "Academic Level", "ASURITE"
 	};
+
+	public int getAttendancePoint(int rowIndex, int dateColIndex) {
+		dateColIndex += 6; // adds six to skip first 6 columns (which aren't date columns)
+		return Integer.parseInt(roster[rowIndex][dateColIndex]);
+	}
 
 	//method saves the number of rows in Roster
 	public void setRosterRowCount(int rowCount){
@@ -23,7 +28,7 @@ public class Information {
 
 	//method returns the number of rows in Roster
 	public int getColumnCount(){
-		return columnArray.length;
+		return headerRow.length;
 	}
 
 	//method saves the number of rows in Attendance
@@ -49,28 +54,28 @@ public class Information {
 
 	//this method returns the column array
 	public String[] getColumnArray() {
-		return columnArray;
+		return headerRow;
 	}
 
 	//this method saves the column array
-	public void setColumninfo(String[] column) {
-
-		this.columnArray = column;
+	public void setColumninfo(String[] headerArray) {
+		this.headerRow = headerArray;
 	}
 
 	//this method adds new column for Date
 	public String[] addColumn(String date) {
+		dateColCount++;
 
 		//initailizing variables
-		int num2 = columnArray.length + 1;
+		int num2 = headerRow.length + 1;
 		String[] temp = new String[num2];
 
 		//for loop to copy info from column and add date to temp
 		for(int i = 0; i < num2; i++) {
-			if( i == columnArray.length) {
+			if( i == headerRow.length) {
 				temp[i] = date;
 			}else {
-				temp[i] = columnArray[i];
+				temp[i] = headerRow[i];
 			}
 		}
 
