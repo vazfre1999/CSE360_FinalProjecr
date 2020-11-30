@@ -13,6 +13,16 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class ScatterPlot extends JFrame {
     private static final long serialVersionUID = 6294689542092367723L;
 
+    private Information roster = new Information();
+
+    public void setRoster(Information roster) {
+        this.roster = roster;
+    }
+    public Information getRoster() {
+        return roster;
+    }
+
+
     public ScatterPlot(String title) {
         super(title);
 
@@ -39,6 +49,17 @@ public class ScatterPlot extends JFrame {
         XYSeriesCollection dataset = new XYSeriesCollection();
 
         //Boys (Age,weight) series
+
+        for ( int dateColIndex = 0; dateColIndex < roster.dateColCount; dateColIndex++) {
+            XYSeries series = new XYSeries(roster.headerRow[dateColIndex]);
+
+            for (int rowIndex = 0; rowIndex < roster.getRosterRowCount(); rowIndex++) {
+                series.add(rowIndex, roster.getAttendancePoint(rowIndex, dateColIndex));
+            }
+
+            dataset.addSeries(series);
+        }
+
         XYSeries serieguessString = new XYSeries("Boys");
         serieguessString.add(1, 72.9);
         serieguessString.add(2, 81.6);
