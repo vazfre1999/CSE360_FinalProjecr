@@ -2,7 +2,7 @@ public class Information {
 
 	//initializing variables
 	String[][] roster; // roster[row][column]
-	String[][] attendance;
+	String[][] attendance; // for new attendance
 	int rosterRowCount;
 	int attendanceRowCount;
 	int totalColCount = 6;
@@ -103,24 +103,18 @@ public class Information {
 
 
 	//method that creates a new row to add date and copies existing data
-	public String[][] increaseSize(String[][] roster, int fileRowCount){
+	public String[][] increaseSize(String[][] roster){
 
 		totalColCount++;
 		dateColCount = totalColCount - 6;
 
-		int currentRowCount = getRosterRowCount();
-		String[][] newRoster;
-		if (fileRowCount > currentRowCount) {
-			newRoster = new String[fileRowCount][totalColCount];
-			this.rosterRowCount = fileRowCount;
-		} else {
-			newRoster = new String[currentRowCount][totalColCount];
-		}
+		int rowCount = getRosterRowCount();
+		String[][] newRoster = new String[rowCount][totalColCount];
 
 		//adding column and copying info into new array
-		for(int i = 0; i < fileRowCount; i++) {
+		for(int i = 0; i < rowCount; i++) {
 			for(int j = 0; j < totalColCount; j++) {
-				if( j < totalColCount-1 && i < currentRowCount) { // for all old roster columns and rows
+				if( j < totalColCount-1 && i < rowCount) { // for all old roster columns and rows
 					newRoster[i][j] = roster[i][j];
 				} else {					// then the new column get initialized to "Absent"
 					newRoster[i][j] = "Absent";
@@ -179,6 +173,7 @@ public class Information {
 			}
 		}//end of for loop
 
+		this.roster = roster;
 		return roster;
 	}
 }
