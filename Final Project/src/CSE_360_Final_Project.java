@@ -102,7 +102,7 @@ public class CSE_360_Final_Project {
 					BufferedReader buffer2 = new BufferedReader(reader2);
 
 					//Prints Name of columns
-					String[] columns = info.getColumnInfo();
+					String[] columns = info.getColumnArray();
 
 					//Initialized variables
 					int index = 0;
@@ -120,7 +120,6 @@ public class CSE_360_Final_Project {
 
 					//parse through file and save in array
 					while((line = buffer2.readLine()) != null) {
-
 						//saves info in data2
 						roster[index] = line.split(",");
 						index++;
@@ -258,6 +257,51 @@ public class CSE_360_Final_Project {
 		//action event when you want to save
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String[] columnArray = info.getColumnArray();
+				String[][] roster = info.getRoster();
+				int columnCount = info.getColumnCount();
+				int rowCount = info.getRosterRowCount();
+
+				try {
+					FileWriter writer = new FileWriter("out2.txt", true);
+
+					// row index starts at -1 to include header of roster
+					for (int rowIndex = -1; rowIndex < rowCount; rowIndex++) {
+						for (int colIndex = 0; colIndex < columnCount; colIndex++) {
+
+							//// if at header row index
+							//if (rowIndex == -1) {
+							//	System.out.print(columnArray[colIndex]);
+							//} else {
+							//	System.out.print(roster[rowIndex][colIndex]);
+							//}
+//
+							//if (colIndex + 1 < columnCount) {
+							//	System.out.print(",");
+							//} else if (rowIndex + 1 < rowCount) {
+							//	System.out.print("\n");
+							//}
+
+
+							//https://www.codejava.net/java-se/file-io/how-to-read-and-write-text-file-in-java
+
+							 //if at header row index
+							if (rowIndex == -1) {
+								writer.write(columnArray[colIndex]);
+							} else {
+								writer.write(roster[rowIndex][colIndex]);
+							}
+//
+							if (colIndex + 1 < columnCount) {
+								writer.write(",");
+							} else if (rowIndex + 1 < rowCount) {
+								writer.write("\n");
+							}
+						}
+					}
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
+				}
 
 			}
 		});
