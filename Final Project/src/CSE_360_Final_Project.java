@@ -190,7 +190,7 @@ public class CSE_360_Final_Project {
 
 
 					//add another column for date
-					String[] column = info.addColumn(date[0]);
+					String[] newColumn = info.addColumn(date[0]);
 
 
 					//Initialized index and line
@@ -227,7 +227,7 @@ public class CSE_360_Final_Project {
 					info.setRoster(roster);	//saving new roster
 
 					//create table with data
-					JTable table = new JTable(roster, column);
+					JTable table = new JTable(roster, newColumn);
 					frame.add(new JScrollPane(table));
 
 
@@ -274,7 +274,7 @@ public class CSE_360_Final_Project {
 		//action event when you want to save
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String[] columnArray = info.getColumnArray();
+				String[] headerRow = info.getColumnArray();
 				String[][] roster = info.getRoster();
 				int columnCount = info.getColumnCount();
 				int rowCount = info.getRosterRowCount();
@@ -286,25 +286,9 @@ public class CSE_360_Final_Project {
 					for (int rowIndex = -1; rowIndex < rowCount; rowIndex++) {
 						for (int colIndex = 0; colIndex < columnCount; colIndex++) {
 
-							//// if at header row index
-							//if (rowIndex == -1) {
-							//	System.out.print(columnArray[colIndex]);
-							//} else {
-							//	System.out.print(roster[rowIndex][colIndex]);
-							//}
-//
-							//if (colIndex + 1 < columnCount) {
-							//	System.out.print(",");
-							//} else if (rowIndex + 1 < rowCount) {
-							//	System.out.print("\n");
-							//}
-
-
-							//https://www.codejava.net/java-se/file-io/how-to-read-and-write-text-file-in-java
-
 							 //if at header row index
 							if (rowIndex == -1) {
-								writer.write(columnArray[colIndex]);
+								writer.write(headerRow[colIndex]);
 							} else {
 								writer.write(roster[rowIndex][colIndex]);
 							}
