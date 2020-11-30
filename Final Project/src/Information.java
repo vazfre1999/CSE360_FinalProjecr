@@ -4,12 +4,12 @@ public class Information {
 	String[][] roster;
 	String[][] attendance;
 	int rosterRowCount;
+	//int columnCount;
 	int attendanceRowCount;
 	int additionalUser;
-	String[] column = new String[] {
+	String[] columnArray = new String[] {
 			"ID" , "First Name", "Last Name", "Program and Plan", "Academic Level", "ASURITE"
 	};
-
 
 	//method saves the number of rows in Roster
 	public void setRosterRowCount(int rowCount){
@@ -19,6 +19,11 @@ public class Information {
 	//method returns the number of rows in Roster
 	public int getRosterRowCount(){
 		return rosterRowCount;
+	}
+
+	//method returns the number of rows in Roster
+	public int getColumnCount(){
+		return columnArray.length;
 	}
 
 	//method saves the number of rows in Attendance
@@ -43,29 +48,29 @@ public class Information {
 
 
 	//this method returns the column array
-	public String[] getColumnInfo() {
-		return column;
+	public String[] getColumnArray() {
+		return columnArray;
 	}
 
 	//this method saves the column array
 	public void setColumninfo(String[] column) {
 
-		this.column = column;
+		this.columnArray = column;
 	}
 
 	//this method adds new column for Date
 	public String[] addColumn(String date) {
 
 		//initailizing variables
-		int num2 = column.length + 1;
+		int num2 = columnArray.length + 1;
 		String[] temp = new String[num2];
 
 		//for loop to copy info from column and add date to temp
 		for(int i = 0; i < num2; i++) {
-			if( i == column.length) {
+			if( i == columnArray.length) {
 				temp[i] = date;
 			}else {
-				temp[i] = column[i];
+				temp[i] = columnArray[i];
 			}
 		}
 
