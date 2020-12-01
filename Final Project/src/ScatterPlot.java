@@ -1,7 +1,5 @@
 import java.awt.Color;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -11,28 +9,28 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 public class ScatterPlot extends JFrame {
-    private static final long serialVersionUID = 6294689542092367723L;
+    //private static final long serialVersionUID = 6294689542092367723L;
 
-    private Information roster = new Information();
+    private Information info;
 
-    public void setRoster(Information roster) {
-        this.roster = roster;
+    public void setRoster(Information info) {
+        this.info = info;
     }
     public Information getRoster() {
-        return roster;
+        return info;
     }
 
 
-    public ScatterPlot(String title) {
+    public ScatterPlot(String title, Information info) {
         super(title);
-
+        this.info = info;
         // Create dataset
         XYDataset dataset = createDataset();
 
         // Create chart
         JFreeChart chart = ChartFactory.createScatterPlot(
                 "Attendance Report",
-                "Percentage of Lecture Attended (min attended / total min of lecture)", "Number of Students", dataset);
+                "Percentage of Lecture Attended (min attended / total min of lecture)", "Students", dataset);
 
 
         //Changes background color
@@ -48,46 +46,31 @@ public class ScatterPlot extends JFrame {
     private XYDataset createDataset() {
         XYSeriesCollection dataset = new XYSeriesCollection();
 
-        //Boys (Age,weight) series
+        for ( int dateColIndex = 0; dateColIndex < info.getDateColCount(); dateColIndex++) {
+            XYSeries series = new XYSeries(info.getHeaderRow()[ 6 + dateColIndex]);
+            int percentage = 0;
+            int roundedPercentage = 0;
+            int[] tallyArray = new int[11]; // each index represents a percentage tally. 0 = 0%, 1 = 10% ... 10 = 100%
+            int tallyIndex = 0;
 
-        for ( int dateColIndex = 0; dateColIndex < roster.dateColCount; dateColIndex++) {
-            XYSeries series = new XYSeries(roster.headerRow[dateColIndex]);
+            for (int rowIndex = 0; rowIndex < info.getRosterRowCount(); rowIndex++) {
 
-            for (int rowIndex = 0; rowIndex < roster.getRosterRowCount(); rowIndex++) {
-                series.add(rowIndex, roster.getAttendancePoint(rowIndex, dateColIndex));
+                percentage = (100*(info.getAttendancePoint(rowIndex, dateColIndex)))/75;
+                roundedPercentage = ((percentage+5)/10)*10;
+                if (roundedPercentage > 100) {
+                    tallyIndex = 10;
+                } else {
+                    tallyIndex = roundedPercentage / 10;
+                }
+
+                tallyArray[tallyIndex]++;
             }
 
+            for (int i = 0; i < 11; i++) {
+                series.add(i*10, tallyArray[i]);
+            }
             dataset.addSeries(series);
         }
-
-        XYSeries serieguessString = new XYSeries("Boys");
-        serieguessString.add(1, 72.9);
-        serieguessString.add(2, 81.6);
-        serieguessString.add(3, 88.9);
-        serieguessString.add(4, 96);
-        serieguessString.add(5, 102.1);
-        serieguessString.add(6, 108.5);
-        serieguessString.add(7, 113.9);
-        serieguessString.add(8, 119.3);
-        serieguessString.add(9, 123.8);
-        serieguessString.add(10, 124.4);
-
-        dataset.addSeries(serieguessString);
-
-        //Girls (Age,weight) series
-        XYSeries series2 = new XYSeries("Girls");
-        series2.add(1, 72.5);
-        series2.add(2, 80.1);
-        series2.add(3, 87.2);
-        series2.add(4, 94.5);
-        series2.add(5, 101.4);
-        series2.add(6, 107.4);
-        series2.add(7, 112.8);
-        series2.add(8, 118.2);
-        series2.add(9, 122.9);
-        series2.add(10, 123.4);
-
-        dataset.addSeries(series2);
 
         return dataset;
     }
