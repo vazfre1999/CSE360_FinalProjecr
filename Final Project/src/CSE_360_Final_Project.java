@@ -54,7 +54,7 @@ public class CSE_360_Final_Project {
 
 
 				//creating JLabel with student info
-				JLabel student1 = new JLabel("Name: Luis Vazquez" + "    ID: 1214868824" + "    Email: lovazque@asu.edu");
+				JLabel student1 = new JLabel("Name: Luis Vazquez " + "    ID: 1214868824" + "    Email: lovazque@asu.edu");
 				JLabel student2 = new JLabel("Name: Abraham Lords" + "   ID: 1207874781" + "    Email: allords@asu.edu");
 				JLabel student3 = new JLabel("Name: Nan Li" + "          ID: 1217668959" + "    Email: nanli9@asu.edu");
 
@@ -68,7 +68,7 @@ public class CSE_360_Final_Project {
 				panel.add(student3);
 
 
-				panel.setLayout(new GridLayout(3,1 ));
+				panel.setLayout(new GridLayout(3,1));
 				panel.add(student1);
 				panel.add(student2);
 				panel.add(student3);
@@ -209,6 +209,7 @@ public class CSE_360_Final_Project {
 									attendance[index] = line.split(",");
 									index++;
 								}
+								
 	
 								//setting number of rows
 								info.setAttendnanceRow(fileRowCount);
@@ -230,8 +231,10 @@ public class CSE_360_Final_Project {
 	
 								//creating buttons
 								int num1 = info.getRosterRowCount();
+								int num2 = info.foundEmails;
+								int result = num1 - num2;
 								JLabel lbl1 = new JLabel("Data loaded for " + num1 + " users in roster");
-								JLabel lbl2 = new JLabel("(Number) additional attendee was found: ");
+								JLabel lbl2 = new JLabel( result + " additional attendee was found: ");
 	
 								//create a gridpanel to add labels
 								JPanel panel = new JPanel();
@@ -307,7 +310,7 @@ public class CSE_360_Final_Project {
 		//action event when you want to plot
 		plot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ScatterPlot plot = new ScatterPlot("Attendance Roster");
+				ScatterPlot plot = new ScatterPlot("Attendance Roster", info);
 				plot.setSize(800, 400);
 				plot.setLocationRelativeTo(null);
 				//example.setDefaultCloseOperation(WindowConst ants.EXIT_ON_CLOSE);
