@@ -152,124 +152,120 @@ public class CSE_360_Final_Project {
 		attendance.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				//creating JfileChooser object
-				JFileChooser chooser = new JFileChooser();
-				chooser.showOpenDialog(null);
-				File selectedFile = chooser.getSelectedFile();
-				String file = selectedFile.getAbsolutePath();
-
-				try {
-					//creating a FileReader and BUfferedReader
-					FileReader read = new FileReader(file);
-					BufferedReader buffer = new BufferedReader(read);
-					FileReader reader2 = new FileReader(file);
-					BufferedReader buffer2 = new BufferedReader(reader2);
-
-					final String[] date = {"d8"};
-
-					//date picker goes here
-					JLabel label = new JLabel("Selected Date:");
-					final JTextField text = new JTextField(20);
-					JButton b = new JButton("popup");
-					JPanel p = new JPanel();
-					p.add(label);
-					p.add(text);
-					p.add(b);
-					final JFrame f = new JFrame();
-					//f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //// this should be exit on picked date, right?
-					f.getContentPane().add(p);
-					f.pack();
-					f.setVisible(true);
-					b.addActionListener(new ActionListener() {
+				//date picker goes here
+				JLabel label = new JLabel("Selected Date:");
+				final JTextField text = new JTextField(20);
+				JButton b = new JButton("popup");
+				JPanel p = new JPanel();
+				p.add(label);
+				p.add(text);
+				p.add(b);
+				final JFrame f = new JFrame();
+				f.getContentPane().add(p);
+				f.pack();
+				f.setVisible(true);
+				f.setLocation(550, 300);
+				f.setSize(450, 150);
+				b.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent ae) {
+							String date;
 							text.setText(new DatePicker2(f).setPickedDate());
-							date[0] = new DatePicker2(f).getPickedDate();
-							//System.out.println(new DatePicker2(f).getPickedDate());
+							date = new DatePicker2(f).getPickedDate();
+							
+							//creating JfileChooser object
+							JFileChooser chooser = new JFileChooser();
+							chooser.showOpenDialog(null);
+							File selectedFile = chooser.getSelectedFile();
+							String file = selectedFile.getAbsolutePath();
+	
+							try {
+								//creating a FileReader and BUfferedReader
+								FileReader read = new FileReader(file);
+								BufferedReader buffer = new BufferedReader(read);
+								FileReader reader2 = new FileReader(file);
+								BufferedReader buffer2 = new BufferedReader(reader2);
+	
+								//add another column for date
+								String[] newColumn = info.addColumn(date);
+	
+								//Initialized index and line
+								int index = 0;
+								int fileRowCount = 0;
+								String line = " ";
+	
+								//parse through file and count number of rows
+								while((buffer.readLine()) != null) {
+									fileRowCount++;
+								}
+	
+								//creating data Array
+								String[][] attendance = new String[fileRowCount][2];
+								String[][] roster = info.getRoster();
+	
+								//parse through file and save in array
+								while((line = buffer2.readLine()) != null) {
+	
+									//saves info in data2
+									attendance[index] = line.split(",");
+									index++;
+								}
+	
+								//setting number of rows
+								info.setAttendnanceRow(fileRowCount);
+	
+								//combines duplicates asurite
+								attendance = info.compareEmails(attendance);
+								info.setAttendance(attendance);
+	
+								roster = info.increaseSize(roster);
+								roster = info.combine(roster, attendance);
+								info.setRoster(roster);	//saving new roster
+								
+								//create table with data
+								JTable table = new JTable(roster, newColumn);
+								frame.add(new JScrollPane(table));
+	
+								//window that displays the number of people is roster, additional attendees, and their name
+								JFrame frame3 = new JFrame("Results");
+	
+								//creating buttons
+								int num1 = info.getRosterRowCount();
+								JLabel lbl1 = new JLabel("Data loaded for " + num1 + " users in roster");
+								JLabel lbl2 = new JLabel("(Number) additional attendee was found: ");
+	
+								//create a gridpanel to add labels
+								JPanel panel = new JPanel();
+								panel.setLayout(new GridLayout(3,1 ));
+								panel.add(lbl1);
+								panel.add(lbl2);
+								panel.setBorder(BorderFactory.createEmptyBorder(10, 175, 10, 10));
+	
+								//add panel to frame
+								frame3.add(panel);
+								frame3.setVisible(true);
+								frame3.setSize(600,250);
+								frame3.setLocation(500, 125);
+	
+								//make text area not visible
+								textArea.setVisible(false);
+	
+								//close BufferedReader
+								textArea.read(buffer, null);
+								buffer.close();
+								buffer2.close();
+								textArea.requestFocus();
+	
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}	
+							
 						}
-					});
-
-
-					//add another column for date
-					String[] newColumn = info.addColumn(date[0]);
-
-
-					//Initialized index and line
-					int index = 0;
-					int fileRowCount = 0;
-					String line = " ";
-
-					//parse through file and count number of rows
-					while((buffer.readLine()) != null) {
-						fileRowCount++;
-					}
-
-					//creating data Array
-					String[][] attendance = new String[fileRowCount][2];
-					String[][] roster = info.getRoster();
-
-					//parse through file and save in array
-					while((line = buffer2.readLine()) != null) {
-
-						//saves info in data2
-						attendance[index] = line.split(",");
-						index++;
-					}
-
-					//setting number of rows for incoming attendance col
-					info.setAttendnanceRow(fileRowCount);
-
-					//combines duplicates asurite
-					attendance = info.compareEmails(attendance);
-					info.setAttendance(attendance);
-
-					roster = info.increaseSize(roster);
-					roster = info.combine(roster, attendance);
-					//info.setRoster(roster); // commented out because increaseSize() and combine() update this.roster
-
-					//create table with data
-					JTable table = new JTable(roster, newColumn);
-					frame.add(new JScrollPane(table));
-
-
-					//window that displays the number of people is roster, additional attendees, and their name
-					JFrame frame3 = new JFrame("Results");
-
-					//creating buttons
-					int num1 = info.getRosterRowCount();
-					JLabel lbl1 = new JLabel("Data loaded for " + num1 + " users in roster");
-					JLabel lbl2 = new JLabel("(Number) additional attendee was found: ");
-
-
-					//create a gridpanel to add labels
-					JPanel panel = new JPanel();
-					panel.setLayout(new GridLayout(3,1 ));
-					panel.add(lbl1);
-					panel.add(lbl2);
-					panel.setBorder(BorderFactory.createEmptyBorder(10, 175, 10, 10));
-
-
-					//add panel to frame
-					frame3.add(panel);
-					frame3.setVisible(true);
-					frame3.setSize(600,250);
-					frame3.setLocation(500, 125);
-
-
-					//make text area not visible
-					textArea.setVisible(false);
-
-					//close BufferedReader
-					textArea.read(buffer, null);
-					buffer.close();
-					buffer2.close();
-					textArea.requestFocus();
-
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
+				}); //end of action event when b is pressed
+			}	
+		});//end of action event when attendance is pressed
+				
+		
 
 		//action event when you want to save
 		save.addActionListener(new ActionListener() {
@@ -292,7 +288,6 @@ public class CSE_360_Final_Project {
 							} else {
 								writer.write(roster[rowIndex][colIndex]);
 							}
-//
 							if (colIndex + 1 < columnCount) {
 								writer.write(",");
 							} else if (rowIndex + 1 < rowCount) {
