@@ -1,23 +1,33 @@
 public class Information {
 
 	//initializing variables
-	String[][] roster; // roster[row][column]
-	String[][] attendance; // for new attendance
-	int rosterRowCount;
-	int attendanceRowCount;
-	int totalColCount = 6;
-	int foundEmails;
-	int dateColCount; // should equal (totalColCount - 6) at all times
-	String[] headerRow = new String[] {
+	private String[][] roster; // roster[row][column]
+	private String[][] attendance; // for new attendance
+	private int rosterRowCount;
+	private int attendanceRowCount;
+	private int totalColCount = 6;
+	private int dateColCount; // should equal (totalColCount - 6) at all times
+	private String[] headerRow = new String[] {
 			"ID" , "First Name", "Last Name", "Program and Plan", "Academic Level", "ASURITE"
 	};
 
-	public int getTotalColCount() {
-		return totalColCount;
+	public int getDateColCount() {
+		return dateColCount;
 	}
 
+	public String[] getHeaderRow() {
+		return headerRow;
+	}
+
+	// extracts attendance minutes value from chart
 	public int getAttendancePoint(int rowIndex, int dateColIndex) {
 		dateColIndex += 6; // adds six to skip first 6 columns (which aren't date columns)
+
+		try {
+			Integer.parseInt(roster[rowIndex][dateColIndex]);
+		} catch (NumberFormatException e) {
+			return 0; // cannot convert to integer then return with value 0
+		}
 		return Integer.parseInt(roster[rowIndex][dateColIndex]);
 	}
 
@@ -72,15 +82,15 @@ public class Information {
 		dateColCount++;
 
 		//initailizing variables
-		int num2 = headerRow.length + 1;
-		String[] temp = new String[num2];
+		int newSize = headerRow.length + 1;
+		String[] temp = new String[newSize];
 
 		//for loop to copy info from column and add date to temp
-		for(int i = 0; i < num2; i++) {
-			if( i == headerRow.length) {
-				temp[i] = date;
-			}else {
+		for(int i = 0; i < newSize; i++) {
+			if( i < headerRow.length) {
 				temp[i] = headerRow[i];
+			}else {
+				temp[i] = date;
 			}
 		}
 
@@ -95,13 +105,6 @@ public class Information {
 
 	}
 
-	//method returns the array of attendance
-	public String[][] getAttendance(){
-		return attendance;
-
-	}
-
-
 	//method that creates a new row to add date and copies existing data
 	public String[][] increaseSize(String[][] roster){
 
@@ -111,19 +114,14 @@ public class Information {
 		int rowCount = getRosterRowCount();
 		String[][] newRoster = new String[rowCount][totalColCount];
 
-		System.out.println(rowCount);
-		System.out.println(totalColCount);
-		
 		//adding column and copying info into new array
 		for(int i = 0; i < rowCount; i++) {
 			for(int j = 0; j < totalColCount; j++) {
-				
-				if( j < totalColCount-1) { // for all old roster columns and rows
+				if( j < totalColCount-1 ) {	// for all old roster columns
 					newRoster[i][j] = roster[i][j];
 				} else {					// then the new column get initialized to "Absent"
 					newRoster[i][j] = "Absent";
 				}
-				
 			}
 		}
 		this.roster = newRoster;
@@ -142,10 +140,7 @@ public class Information {
 			for(int k = 1; k < rowCount; k++ ) {
 				//comparing to find similar asurite
 				if(attendance[i][0].compareTo(attendance[k][0]) == 0) {
-					
-					
-					if(i == k)
-					{
+					if(i == k) {
 						break;
 					}else{
 						//adding tow integers and storing it in array
@@ -169,26 +164,17 @@ public class Information {
 	//searches for user using email and adds attendance to roster create one table
 	public String[][] combine(String[][] roster, String[][] attendance) {
 
-		int emailIndex = getColumnCount() - 2;
-		int emptySlot =  getColumnCount() - 1;
-		foundEmails = 0;
-		
 		//comment here
 		for(int i = 0; i < getRosterRowCount(); i++ ) {
 			for(int j = 0; j < getAttendanceRowCount(); j++ ) {
-				
-				System.out.println(roster[i][5]);
-				System.out.println(attendance[j][0]);
-				
-				if(roster[i][5].compareTo(attendance[j][0]) == 0) {
-					System.out.println("yes at " + i + " and " + j);
-					roster[i][emptySlot]= attendance[j][1];
-					foundEmails++;
-				}
 
+				if(roster[i][5].compareTo(attendance[j][0]) == 0) {
+
+					roster[i][6]= attendance[j][1];
+				}
 			}
 		}//end of for loop
-		
+
 		this.roster = roster;
 		return roster;
 	}
