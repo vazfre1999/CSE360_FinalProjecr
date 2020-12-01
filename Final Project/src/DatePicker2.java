@@ -15,7 +15,7 @@ class DatePicker2 {
         d.setModal(true);
         String[] header = { "Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat" };
         JPanel p1 = new JPanel(new GridLayout(7, 7));
-        p1.setPreferredSize(new Dimension(430, 120));
+        p1.setPreferredSize(new Dimension(600, 150));
 
         for (int x = 0; x < button.length; x++) {
             final int selection = x;
@@ -89,27 +89,5 @@ class DatePicker2 {
     public String getPickedDate() {
         String date = month + "-" + day + "-" + year;
         return date;
-    }
-}
-
-class Picker2 {
-    public static void main(String[] args) {
-        JLabel label = new JLabel("Selected Date:");
-        final JTextField text = new JTextField(20);
-        JButton b = new JButton("popup");
-        JPanel p = new JPanel();
-        p.add(label);
-        p.add(text);
-        p.add(b);
-        final JFrame f = new JFrame();
-        f.getContentPane().add(p);
-        f.pack();
-        f.setVisible(true);
-        b.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                text.setText(new DatePicker2(f).setPickedDate());
-                System.out.println(new DatePicker2(f).getPickedDate());
-            }
-        });
     }
 }
